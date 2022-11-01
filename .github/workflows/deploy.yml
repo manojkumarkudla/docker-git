@@ -1,0 +1,29 @@
+name: Terraform apply for main Branch
+on:
+  push:
+    branches:
+      main
+jobs:
+  terraform-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+      id-token: write
+    steps:
+      - name: Clone our repository
+        uses: actions/checkout@v3
+      - name: AWS Authentication
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::409256943670:role/github-actions
+          aws-region: eu-west-1
+          role-session-name: GithubDeploy
+      - name: Terraform Set up
+        uses: hashicorp/setup-terraform@v1
+      - name: Terraform initialization
+        run: terraform init
+      - name: Terraform planning
+        run: terraform plan
+      - name: Terraform apply
+        run: terraform apply -auto-approve
