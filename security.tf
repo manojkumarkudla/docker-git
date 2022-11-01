@@ -3,13 +3,13 @@ resource "aws_security_group" "docker_server" {
   description = "Allow connection for inbound traffic"
   vpc_id      = data.aws_vpc.talent_academy.id
 
-  # ingress {
-  #   description      = "allow port 80"
-  #   from_port        = 80
-  #   to_port          = 80
-  #   protocol         = "tcp"
-  #   cidr_blocks      = ["0.0.0.0/0"]
-  # }
+  ingress {
+    description      = "allow port 80"
+    from_port        = 80
+    to_port          = 80
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
 
   ingress {
     description      = "allow port 22"
